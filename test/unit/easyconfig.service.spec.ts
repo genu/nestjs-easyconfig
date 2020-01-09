@@ -6,7 +6,7 @@ import { Ogma } from 'ogma';
 
 describe('EasyconfigService', () => {
 	const service: EasyconfigService = new EasyconfigService({
-		path: '.env.dev',
+		// path: '.env.dev',
 		safe: true,
 	});
 

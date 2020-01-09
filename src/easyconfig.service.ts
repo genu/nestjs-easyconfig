@@ -49,10 +49,20 @@ export class EasyconfigService {
 		} else {
 			this.logger.debug('Config looks good :) ');
 		}
-	}
+	};
 
 	private tryGetConfigFromEnv = (config?: Config) => {
-		const sampleFile: string = config.sampleFilePath ? path.resolve(config.sampleFilePath) : this.sampleFile;
+		if (process.env.NODE_ENV === 'production') {
+			this.logger.debug(
+				'Production environment detected. Not loading .env file',
+			);
+			this.envConfig = process.env;
+			return;
+		}
+
+		const sampleFile: string = config.sampleFilePath
+			? path.resolve(config.sampleFilePath)
+			: this.sampleFile;
 
 		try {
 			if (!config.path && process.env.NODE_ENV) {
@@ -77,5 +87,5 @@ export class EasyconfigService {
 		} catch (err) {
 			throw new EasyconfigError(err);
 		}
-	}
+	};
 }
